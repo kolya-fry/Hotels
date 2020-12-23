@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "title": "Гостиница Ессентуки",
+      "picture": "http://hotel-kurortniy.ru/upload/iblock/db1/db1d5efec6d7ba8e98652638e1cf83a5.png",
+      "id": 1,
+      "url": "http://hotel-kurortniy.ru/"
+    },
+    {
+      "title": "Ихтиандрам",
+      "picture": "https://www.orangesmile.com/extreme/img/main/conrad-maldives-rangali-hotel_1.jpg",
+      "id": 2,
+      "url": "http://hotel-kurortniy.ru/"
+    }
+  ]
+}

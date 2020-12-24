@@ -6,8 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    gridView: false,
   },
   mutations: {
+    setGridView: (state, value) => {
+      state.gridView = value
+    }
+  },
+  getters: {
+    getGridView: state => state.gridView
   },
   actions: {
   },

@@ -1,65 +1,152 @@
 <template>
-  <div>
+  <div class="q-pb-lg">
     <Hotel :hotel="hotel" />
+    <div class="booking-form">
+      <h4>
+        Для активации сертификата заполните поля
+      </h4>
 
-    Для активации сертификата заполните поля
-    <form @submit.prevent="sendForm">
-      <div>
-        В какой отель отправимся
-        <input type="text" v-model="hotelName"/>
+      <div class="q-mb-lg">
+        <q-btn
+          class="q-mt-sm"
+          push
+          color="primary"
+          :label="formatDate(bookingData.bookingDate)"
+        >
+          <q-popup-proxy>
+            <q-date v-model="bookingData.bookingDate" minimal />
+          </q-popup-proxy>
+        </q-btn>
+        <div class="text-subtitle2">
+          Необходимо активировать не позднее, чем за 7 дней до визита. Выбрать
+          можно любые даты, кроме праздничных.
+        </div>
       </div>
-      <div>
-        Дата заезда Необходимо активировать не позднее, чем за 7 дней до визита.
-        Выбрать можно любые даты, кроме праздничных.
+
+      <div class="input-wrapper">
+        <q-input
+          outlined
+          v-model="bookingData.certificate"
+          label="Номер сертификата"
+          placeholder="NOV0-0000-0000-0000"
+        />
       </div>
-      <div>
-        Номер сертификата
-        <input type="text" v-model="certificate"/>
+
+      <div class="input-wrapper">
+        <q-input
+          outlined
+          v-model="bookingData.name"
+          label="Ваше имя и фамилия"
+          class="q-mt-sm"
+        />
       </div>
-      <div class="">
-        Ваше имя и фамилия
-        <input type="text" v-model="name"/>
+
+      <div class="input-wrapper">
+        <q-checkbox
+          v-model="bookingData.allGuestsAreResidents"
+          label="Все гости являются гражданами РФ"
+          color="teal"
+        />
       </div>
-      <div class="">
-        <input type="checkbox" v-model="residents">
-        Все гости являются гражданами РФ
+
+      <div class="input-wrapper">
+        Кровать
+        <q-radio v-model="bookingData.bathSize" :val="1" label="Односпальная" />
+        <q-radio v-model="bookingData.bathSize" :val="2" label="двуспальная" />
       </div>
-      <div>
-        Кровать Одна двуспальная кровать
+
+      <div class="input-wrapper q-mt-md">
+        <div class="q-mb-sm">
+          Дети
+        </div>
+        <q-btn
+          v-if="showAddChildrenButtonCondition"
+          class="main-button q-mb-sm"
+          color="primary"
+          @click="addChild"
+        >
+          +
+        </q-btn>
+        <div v-if="bookingData.childrenWithAge.length">
+          <div v-for="(child, key) in bookingData.childrenWithAge" :key="key">
+            <q-badge color="primary">
+              Возраст: {{ bookingData.childrenWithAge[key] }} (0 to 18)
+            </q-badge>
+            <q-slider
+              v-model="bookingData.childrenWithAge[key]"
+              :min="minChildenAge"
+              :max="maxChildenAge"
+            />
+          </div>
+        </div>
+        <div v-else>
+          Если планируете отдых с детьми, то укажите их количество и возраст
+        </div>
       </div>
-      <div class="">
-        Дети Если планируете отдых с детьми, то укажите их количество и возраст
+
+      <div class="input-wrapper q-mt-lg">
+        <q-input
+          outlined
+          v-model="bookingData.email"
+          label="Электронная почта"
+          placeholder="user@host.ru"
+        />
       </div>
-      <div class="">
-        <input type="text" v-model="email" placeholder="Электронная почта">
+
+      <div class="input-wrapper">
+        <q-input
+          outlined
+          v-model="bookingData.phone"
+          label="Телефон"
+          placeholder="+7 (999) 999-99-99"
+        />
       </div>
-      <div class="">
-        Телефон
-        <input type="+7 (999) 999-99-99">
+
+      <div class="input-wrapper">
+        <q-checkbox
+          v-model="bookingData.acceptUserCondition"
+          label="Я согласен с условиями публичной оферты"
+          color="teal"
+        />
       </div>
-      <div class="">
-        <input type="checkbox" v-model="residents">
-        Я согласен с условиями публичной оферты
+
+      <div class="input-wrapper">
+        <q-checkbox
+          v-model="bookingData.acceptProtectionData"
+          label="Я согласен с положением о защите персональных данных"
+          color="teal"
+        />
       </div>
-      <div>
-        <input type="checkbox" v-model="residents">
-        Я согласен с положением о защите персональных данных
-      </div>
-      <button class="main-button" type="submit">
+
+      <q-btn class="main-button q-mt-lg" color="primary" @click="sendForm">
         Активировать сертификат
-      </button>
-      <div>
-        Отлично! Мы свяжемся с вами, чтобы подтвердить заявку на активацию.
-        Отдел бронирования работает по будням с 10:00 до 19:00.
-      </div>
-    </form>
+      </q-btn>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { mapGetters } from "vuex";
-import Hotel from "@/components/Hotel.vue";
+import { Component, Prop, Vue } from "vue-property-decorator"
+import { mapGetters } from "vuex"
+import Hotel from "@/components/Hotel.vue"
+import moment from "moment"
+
+const MAX_CHILDREN_COUNT:number = 10
+const MIN_CHILDREN_AGE:number = 0
+const MAX_CHILDREN_AGE:number = 18
+
+interface BookingData {
+  certificate: string
+  name: string
+  phone: string
+  bookingDate: string
+  email: string
+  bathSize: number
+  childrenWithAge: number[]
+  allGuestsAreResidents: boolean
+  acceptUserCondition: boolean
+  acceptProtectionData: boolean
+}
 
 @Component({
   components: {
@@ -67,22 +154,81 @@ import Hotel from "@/components/Hotel.vue";
   },
 })
 export default class Booking extends Vue {
+  bookingData = {} as BookingData
 
-  hotelName: string = ''
-  certificate: string = ''
-  name: string = ''
-  residents: boolean = true
+  minChildenAge = MIN_CHILDREN_AGE
+  maxChildenAge = MAX_CHILDREN_AGE
 
+  mounted() {
+    this.bookingData = {
+      certificate: "",
+      name: "",
+      phone: "",
+      bookingDate: "",
+      email: "",
+      bathSize: 1,
+      childrenWithAge: [],
+      allGuestsAreResidents: true,
+      acceptUserCondition: true,
+      acceptProtectionData: true,
+    }
+  }
 
   get hotel() {
-    return this.$route.params.hotel;
+    return this.$route.params.hotel
+  }
+
+  formatFields() {
+    return Object.entries(this.bookingData).map(field => `${field[0]}: ${field[1]} `)
   }
 
   sendForm() {
-    console.log(this.hotelName)
-    console.log(this.certificate)
+    this.$q.notify(`Собранные данные: ${this.formatFields()}`)
+
+    this.$q.notify(`        
+        Отлично! Мы свяжемся с вами, чтобы подтвердить заявку на активацию.
+        Отдел бронирования работает по будням с 10:00 до 19:00.`)
+    }
+
+  addChild() {
+    this.bookingData.childrenWithAge.push(0)
+  }
+
+  formatDate(date) {
+    if (!date) {
+      return "Дата заезда"
+    }
+    return moment(date).format("DD.MM.YYYY")
+  }
+
+  get showAddChildrenButtonCondition() {
+    if (!this.bookingData?.childrenWithAge) return false
+    return this.bookingData.childrenWithAge.length <= MAX_CHILDREN_COUNT
   }
 }
 </script>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+
+.input-wrapper {
+  margin-bottom: 8px;
+}
+
+.booking-form {
+  width: 100%;
+  max-width: 744px;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-subtitle2 {
+  font-size: 11px;
+  max-width: 420px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+}
+</style>

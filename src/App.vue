@@ -2,7 +2,7 @@
   <div id="app">
     <div class="panel">
       <router-link tag="div" class="logo" to="/">
-        <img src="@/assets/cuva_logo_white.png" alt="Cuva">
+        <img src="@/assets/cuva_logo_white.png" alt="Cuva" />
       </router-link>
       <div
         class="view_btn view_btn-grid"
@@ -31,22 +31,33 @@
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
+
+import { Quasar, Notify } from "quasar";
+
+Vue.use(Quasar, {
+  plugins: {
+    Notify,
+  },
+  config: {
+    notify: {},
+  },
+});
 
 Vue.use(Vuex);
 export default {
   computed: {
     gridView: {
       get() {
-        return this.$store.getters.getGridView
+        return this.$store.getters.getGridView;
       },
-      set (value) {
-        this.$store.commit('setGridView', value)
-      }
-    }
-  }
-}
+      set(value) {
+        this.$store.commit("setGridView", value);
+      },
+    },
+  },
+};
 </script>
 <style lang="stylus">
 
@@ -55,8 +66,8 @@ export default {
 
 :root {
   --main: #101010;
-  --shadow-color: #e3e3e3;
-  --shadow: 0px 5px 10px 0px var(--shadow-color);
+  --shadow-color: #6d6d6d;
+  --shadow: 0px 1px 3px 0px var(--shadow-color);
   --light-text-color: #fff;
 }
 
@@ -78,7 +89,11 @@ body {
 
 h1 {
   margin-bottom: 70px;
-  font-size: clamp(16px, 4vw, 42px);
+  font-size: clamp(16px, 4vw, 42px)!important;
+  line-height: 50px!important;
+  @media screen and (max-width: 758px) {
+    line-height: 30px!important;
+  }
 }
 
 .container {
@@ -95,7 +110,7 @@ h1 {
   display: flex;
   padding-left: 24px;
   padding-right: 24px;
-  height: 40px;
+  height: 50px;
   align-items: center;
   justify-content: space-between;
 }
@@ -106,12 +121,15 @@ h1 {
   font-weight: 600;
   font-size: 22px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   & img {
     width: 100%;
   }
 }
 
-.view_btn {
+  .view_btn {
+    cursor: pointer;
     width: 22px;
     height: 22px;
     overflow: hidden;

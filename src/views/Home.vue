@@ -4,7 +4,7 @@
       Подарите близким незабываемые выходные в отеле с открытой датой
     </h1>
     <div class="hotel_wrapper" :class="{ 'hotel_wrapper--grid': gridView }">
-      <Hotel :hotel="hotel" v-for="hotel in hotels" :key="hotel.id" />
+      <Hotel :hotel="hotel" v-for="hotel in hotels" :key="hotel.id" main/>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ export default class Home extends Vue {
 .hotel_wrapper {
   &--grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 40px;
   }
 }

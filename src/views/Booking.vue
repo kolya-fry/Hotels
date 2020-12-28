@@ -2,7 +2,7 @@
   <div class="q-pb-lg">
     <Hotel :hotel="hotel" v-if="hotel"/>
     <div class="booking-form">
-      <h3>
+      <h3 v-if="hotel">
         {{hotel.title}}
       </h3>
       <h4>
@@ -16,8 +16,8 @@
           color="primary"
           :label="formatDate(bookingData.bookingDate)"
         >
-          <q-popup-proxy>
-            <q-date v-model="bookingData.bookingDate" minimal />
+          <q-popup-proxy ref="qDateProxy">
+            <q-date v-model="bookingData.bookingDate" minimal @input="$refs.qDateProxy.hide()"/>
           </q-popup-proxy>
         </q-btn>
         <div class="text-subtitle2">

@@ -1,0 +1,66 @@
+{
+  "data": [{
+      "title": "Коттеджи «Черника»",
+      "picture": "https://q.bstatic.com/xdata/images/hotel/max1024x768/126792998.jpg?k=76cc2752d2a396a8b2cf30413f65c54c230caea0ea0b5ae18c4f31fc42edf454&o=",
+      "id": 1,
+      "url": "",
+      "address": "Ленинградская область, Приозерский район"
+    },
+    {
+      "title": "Пикник-парк «ЛесОк»",
+      "picture": "https://katalogturbaz.ru/sites/default/files/styles/original/public/fototurbaz/9800/lesok-03.jpg",
+      "id": 2,
+      "url": "",
+      "address": "Ленинградская область, Всеволожский район"
+    },
+    {
+      "title": "Экоотель «Лес»",
+      "picture": "https://ic.pics.livejournal.com/photo_belkin/63059220/370777/370777_original.jpg",
+      "id": 3,
+      "url": "",
+      "address": "Ленинградская область, Выборский район"
+    },
+    {
+      "title": "База отдыха «Мишкина Сказка»",
+      "picture": "https://www.karelia-otdyh.ru/karelia/lahdenpohskij-rajon/baza-otdyha-mishkina-skazka/original/kareliya-baza-otdyha-mishkina-skazka-0201170.jpg",
+      "id": 4,
+      "url": "",
+      "address": "Карелия, Лахденпохский район"
+    },
+    {
+      "title": "Кемпинг Ladoga.Land",
+      "picture": "https://sun9-53.userapi.com/c858220/v858220493/a777d/Dq8nNy7MRvE.jpg",
+      "id": 5,
+      "url": "",
+      "address": "Ленинградская область, Приозерский район"
+    },
+    {
+      "title": "Кемпинг «Папоротник»",
+      "picture": "https://static.tildacdn.com/tild3166-6663-4233-b463-616333653232/___2019485.jpeg",
+      "id": 6,
+      "url": "",
+      "address": "Карелия, Рускеала"
+    },
+    {
+      "title": "Комплекс гостевых домов «Вепсский хутор»",
+      "picture": "https://turbaza.ru/images/bases/849/4cd57839a48b01aeeeb82529300c9252.jpg",
+      "id": 7,
+      "url": "",
+      "address": "Карелия, бухта Онежского озера"
+    },
+    {
+      "title": "Номер-студия «Карельская изба»​ в туристическом комплексе «Велт»",
+      "picture": "https://turbaza.ru/images/bases/3006/fef4ebeea98bf62e3a3321ed26b5392d.jpg",
+      "id": 8,
+      "url": "",
+      "address": "Республика Карелия, Калевала"
+    },
+    {
+      "title": "Глэмпинг Shanti Home",
+      "picture": "https://static-cdn4.vigbo.tech/u51643/82599/blog/5228856/4523398/section/ef0af85469c6ee86eca0ce5915da8839.jpg",
+      "id": 9,
+      "url": "",
+      "address": "Ленинградская область, Приозёрский район"
+    }
+  ]
+}

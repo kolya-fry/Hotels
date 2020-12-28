@@ -34,17 +34,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { Quasar, Notify } from "quasar";
-
-Vue.use(Quasar, {
-  plugins: {
-    Notify,
-  },
-  config: {
-    notify: {},
-  },
-});
-
 Vue.use(Vuex);
 export default {
   computed: {
@@ -85,6 +74,9 @@ body {
 
 .page {
   margin-top: 50px;
+  @media screen and (max-width: 600px) {
+    margin-top: 0;
+  }
 }
 
 h1 {
@@ -93,6 +85,10 @@ h1 {
   line-height: 50px!important;
   @media screen and (max-width: 758px) {
     line-height: 30px!important;
+  }
+  @media screen and (max-width: 600px) {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 

@@ -13,12 +13,11 @@ const routes: Array<RouteConfig> = [
     path: '/booking/:id',
     name: 'Booking',
     component: () => import('../views/Booking.vue'),
-    props: true,
-    // props: route => {
-    //   return {
-    //     id: route.params.id,
-    //   }
-    // },
+  },
+  {
+    path: '/final',
+    name: 'Final',
+    component: () => import('../views/Final.vue'),
   }
 ]
 

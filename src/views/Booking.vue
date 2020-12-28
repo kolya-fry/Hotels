@@ -1,7 +1,10 @@
 <template>
   <div class="q-pb-lg">
-    <Hotel :hotel="hotel" />
+    <Hotel :hotel="hotel" v-if="hotel"/>
     <div class="booking-form">
+      <h3>
+        {{hotel.title}}
+      </h3>
       <h4>
         Для активации сертификата заполните поля
       </h4>
@@ -45,7 +48,7 @@
         <q-checkbox
           v-model="bookingData.allGuestsAreResidents"
           label="Все гости являются гражданами РФ"
-          color="teal"
+          color="primary"
         />
       </div>
 
@@ -67,7 +70,7 @@
         >
           +
         </q-btn>
-        <div v-if="bookingData.childrenWithAge.length">
+        <div v-if="showchildrenList">
           <div v-for="(child, key) in bookingData.childrenWithAge" :key="key">
             <q-badge color="primary">
               Возраст: {{ bookingData.childrenWithAge[key] }} (0 to 18)
@@ -106,7 +109,7 @@
         <q-checkbox
           v-model="bookingData.acceptUserCondition"
           label="Я согласен с условиями публичной оферты"
-          color="teal"
+          color="primary"
         />
       </div>
 
@@ -114,7 +117,7 @@
         <q-checkbox
           v-model="bookingData.acceptProtectionData"
           label="Я согласен с положением о защите персональных данных"
-          color="teal"
+          color="primary"
         />
       </div>
 
@@ -152,14 +155,20 @@ interface BookingData {
   components: {
     Hotel,
   },
+  computed: {
+    ...mapGetters("hotels", ["hotels", "hotelByIdFunc"]),
+  }
 })
 export default class Booking extends Vue {
+  hotelByIdFunc!: any
+  hotel: any = null
   bookingData = {} as BookingData
-
   minChildenAge = MIN_CHILDREN_AGE
   maxChildenAge = MAX_CHILDREN_AGE
 
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("hotels/fetchHotels");
+    this.hotel = this.hotelByIdFunc(this.$route.params.id)
     this.bookingData = {
       certificate: "",
       name: "",
@@ -174,10 +183,6 @@ export default class Booking extends Vue {
     }
   }
 
-  get hotel() {
-    return this.$route.params.hotel
-  }
-
   formatFields() {
     return Object.entries(this.bookingData).map(field => `${field[0]}: ${field[1]} `)
   }
@@ -188,6 +193,10 @@ export default class Booking extends Vue {
     this.$q.notify(`        
         Отлично! Мы свяжемся с вами, чтобы подтвердить заявку на активацию.
         Отдел бронирования работает по будням с 10:00 до 19:00.`)
+
+    this.$router.push({
+      name: 'Final'
+    })
     }
 
   addChild() {
@@ -199,6 +208,10 @@ export default class Booking extends Vue {
       return "Дата заезда"
     }
     return moment(date).format("DD.MM.YYYY")
+  }
+
+  get showchildrenList() {
+    return this.bookingData?.childrenWithAge?.length ?? null
   }
 
   get showAddChildrenButtonCondition() {

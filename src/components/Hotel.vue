@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel-card" @click="navigateToBooking(hotel)">
+  <div class="hotel-card" :class="{'hotal-card--view-only': !main}" @click="navigateToBooking(hotel)">
     <q-img :src="hotel.picture" alt="hotel.title" :ratio="1">
       <div class="hotel-card__title">
         {{ hotel.title }}
@@ -13,13 +13,24 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { mapGetters } from "vuex";
 
-@Component
+@Component({
+  computed: {
+    ...mapGetters("hotels", ["hotels"]),
+  },
+})
 export default class Hotel extends Vue {
   @Prop() private hotel!: object;
   @Prop() private main!: boolean;
+  hotels
+  mounted() {
+    if (!this.hotels) this.$store.dispatch("hotels/fetchHotels");
+  }
+
 
   navigateToBooking(hotel) {
+    if (!this.main) return
     this.$router.push({
       name: `Booking`,
       params: {
@@ -40,6 +51,7 @@ export default class Hotel extends Vue {
   overflow: hidden;
   margin-bottom: 20px;
   cursor: pointer;
+  
 
   &:after,
   &:before {
@@ -91,5 +103,19 @@ export default class Hotel extends Vue {
 .hotel_wrapper--grid .hotel-card {
   height: auto;
   margin-bottom: auto;
+}
+
+.hotal-card--view-only {
+  height: 300px;
+  cursor: unset;
+  & .q-img {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  & .hotel-card__title {
+    z-index: 5;
+  }
 }
 </style>

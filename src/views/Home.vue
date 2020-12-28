@@ -4,7 +4,7 @@
       Подарите близким незабываемые выходные в отеле с открытой датой
     </h1>
     <div class="hotel_wrapper" :class="{ 'hotel_wrapper--grid': gridView }">
-      <Hotel :hotel="hotel" v-for="hotel in hotels" :key="hotel.id" main/>
+      <Hotel :hotel="hotel" v-for="hotel in hotels" :key="hotel.id" :main="true" />
     </div>
   </div>
 </template>
@@ -13,6 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Hotel from "@/components/Hotel.vue";
 import { mapGetters } from "vuex";
+import { hotels } from "@/api/apiServices";
 @Component({
   computed: {
     ...mapGetters("hotels", ["hotels"]),
@@ -22,16 +23,13 @@ import { mapGetters } from "vuex";
   },
 })
 export default class Home extends Vue {
+  hotels;
   mounted() {
-    this.fetchHotels();
+    if (!this.hotels) this.$store.dispatch("hotels/fetchHotels");
   }
 
   get gridView() {
     return this.$store.getters.getGridView;
-  }
-
-  async fetchHotels() {
-    this.$store.dispatch("hotels/fetchHotels");
   }
 }
 </script>

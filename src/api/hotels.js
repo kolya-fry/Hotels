@@ -9,7 +9,7 @@ const hotelsApi = config =>
 const fetchHotels = params =>
   hotelsApi({
     method: 'get',
-    url: './api/fakeHotelsJson.json',
+    url: '/api/fakeHotelsJson.json',
     params,
   })
 

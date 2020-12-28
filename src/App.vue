@@ -55,9 +55,10 @@ export default {
 
 :root {
   --main: #101010;
-  --shadow-color: #6d6d6d;
-  --shadow: 0px 1px 3px 0px var(--shadow-color);
+  --shadow-color: #000000;
+  --shadow: 2px 2px 1px var(--shadow-color);
   --light-text-color: #fff;
+  --q-color-primary: #198b68!important;
 }
 
 body {

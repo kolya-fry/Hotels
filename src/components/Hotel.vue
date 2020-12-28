@@ -58,7 +58,7 @@ export default class Hotel extends Vue {
     content: '';
     display: block;
     width: 100%;
-    height: 30%;
+    height: 42%;
     position: absolute;
     z-index: 1;
     transition: background .4s;
@@ -66,12 +66,12 @@ export default class Hotel extends Vue {
 
   &:before {
     top: 0;
-    background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,.7) 100%);
+    background: linear-gradient(0deg, rgba(255,255,255,0) 0%, #00000075 51%, #000000db 100%)
   }
 
   &:after {
     bottom: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,.7) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #00000075 51%, #000000db 100%)
   }
 
   & img {
@@ -79,8 +79,8 @@ export default class Hotel extends Vue {
   }
 
   &__title {
-    font-weight: 600;
-    font-size: clamp(16px, 2vw, 22px);;
+    font-weight: 500;
+    font-size: clamp(16px, 2vw, 30px);
     color: var(--light-text-color);
     position: absolute;
     text-shadow: var(--shadow);
@@ -117,5 +117,8 @@ export default class Hotel extends Vue {
   & .hotel-card__title {
     z-index: 5;
   }
+}
+.hotel_wrapper--grid .hotel-card__title {
+  font-size: clamp(13px, 2vw, 15px);
 }
 </style>
